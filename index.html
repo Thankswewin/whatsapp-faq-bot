@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp FAQ Bot - Intelligent Customer Service Automation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp FAQ Bot</span>
+                </div>
+                <div class="header-actions">
+                    <button class="analytics-btn" onclick="showAnalytics()">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </button>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Bot Configuration Section -->
+            <section class="config-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-robot"></i> Bot Configuration</h2>
+                    <p>Set up your intelligent WhatsApp FAQ bot</p>
+                </div>
+
+                <div class="config-grid">
+                    <!-- Basic Settings -->
+                    <div class="config-panel">
+                        <h3><i class="fas fa-cog"></i> Basic Settings</h3>
+
+                        <div class="form-group">
+                            <label for="botName">Bot Name *</label>
+                            <input type="text" id="botName" placeholder="e.g., Customer Support Bot" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="businessName">Business Name *</label>
+                            <input type="text" id="businessName" placeholder="Your Business Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber">WhatsApp Business Number *</label>
+                            <input type="tel" id="phoneNumber" placeholder="+234 801 234 5678" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="welcomeMessage">Welcome Message *</label>
+                            <textarea id="welcomeMessage" rows="3" placeholder="Hello! Welcome to [Business Name]. How can I help you today?" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fallbackMessage">Fallback Message</label>
+                            <textarea id="fallbackMessage" rows="2" placeholder="I'm sorry, I don't understand. Let me connect you with a human agent."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="workingHours">Working Hours</label>
+                            <div class="working-hours">
+                                <select id="workingDays">
+                                    <option value="all">All Days</option>
+                                    <option value="weekdays">Monday - Friday</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <input type="time" id="startTime" value="09:00">
+                                <span>to</span>
+                                <input type="time" id="endTime" value="17:00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bot Behavior -->
+                    <div class="config-panel">
+                        <h3><i class="fas fa-brain"></i> Bot Behavior</h3>
+
+                        <div class="form-group">
+                            <label for="responseStyle">Response Style</label>
+                            <select id="responseStyle">
+                                <option value="professional">Professional</option>
+                                <option value="friendly">Friendly & Casual</option>
+                                <option value="formal">Formal</option>
+                                <option value="playful">Playful</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="language">Language</label>
+                            <select id="language">
+                                <option value="en">English</option>
+                                <option value="en-ng">Nigerian English</option>
+                                <option value="pidgin">Nigerian Pidgin</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="auto">Auto-detect</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="responseDelay">Response Delay (seconds)</label>
+                            <input type="range" id="responseDelay" min="0" max="5" value="1" step="0.5">
+                            <span class="range-value">1.0s</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confidenceThreshold">Confidence Threshold (%)</label>
+                            <input type="range" id="confidenceThreshold" min="50" max="100" value="75">
+                            <span class="range-value">75%</span>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="enableEmojis" checked>
+                                Use Emojis in Responses
+                            </label>
+                            <label>
+                                <input type="checkbox" id="enableTyping" checked>
+                                Show Typing Indicator
+                            </label>
+                            <label>
+                                <input type="checkbox" id="enableQuickReplies" checked>
+                                Enable Quick Replies
+                            </label>
+                            <label>
+                                <input type="checkbox" id="enableHumanHandoff" checked>
+                                Enable Human Handoff
+                            </label>
+                            <label>
+                                <input type="checkbox" id="enableAnalytics" checked>
+                                Enable Conversation Analytics
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp API Settings -->
+                <div class="api-settings">
+                    <h3><i class="fas fa-plug"></i> WhatsApp API Settings</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="webhookUrl">Webhook URL</label>
+                            <input type="url" id="webhookUrl" placeholder="https://your-webhook-url.com/whatsapp">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessToken">Access Token</label>
+                            <input type="password" id="accessToken" placeholder="Your WhatsApp API access token">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumberId">Phone Number ID</label>
+                            <input type="text" id="phoneNumberId" placeholder="1234567890123456">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="webhookVerifyToken">Webhook Verify Token</label>
+                            <input type="text" id="webhookVerifyToken" placeholder="your-secret-verify-token">
+                        </div>
+                    </div>
+
+                    <div class="api-status">
+                        <button class="test-api-btn" onclick="testWhatsAppAPI()">
+                            <i class="fas fa-vial"></i> Test API Connection
+                        </button>
+                        <div class="status-indicator" id="apiStatus">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Not Connected</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Management Section -->
+            <section class="faq-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-question-circle"></i> FAQ Management</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="addFAQ()">
+                            <i class="fas fa-plus"></i> Add FAQ
+                        </button>
+                        <button class="btn btn-secondary" onclick="importFAQ()">
+                            <i class="fas fa-upload"></i> Import
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportFAQ()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="btn btn-secondary" onclick="showTemplates()">
+                            <i class="fas fa-copy"></i> Templates
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="faq-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="faqSearch" placeholder="Search FAQs...">
+                    </div>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="general">General</option>
+                        <option value="products">Products</option>
+                        <option value="services">Services</option>
+                        <option value="pricing">Pricing</option>
+                        <option value="support">Support</option>
+                        <option value="shipping">Shipping</option>
+                        <option value="returns">Returns</option>
+                        <option value="technical">Technical</option>
+                    </select>
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                </div>
+
+                <!-- FAQ List -->
+                <div class="faq-list" id="faqList">
+                    <!-- FAQs will be populated here -->
+                </div>
+            </section>
+
+            <!-- Message Templates Section -->
+            <section class="templates-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-alt"></i> Message Templates</h2>
+                    <p>Pre-approved WhatsApp message templates for different scenarios</p>
+                </div>
+
+                <div class="template-categories">
+                    <button class="category-btn active" onclick="showTemplateCategory('welcome')">
+                        <i class="fas fa-hand-wave"></i> Welcome
+                    </button>
+                    <button class="category-btn" onclick="showTemplateCategory('confirmation')">
+                        <i class="fas fa-check"></i> Confirmation
+                    </button>
+                    <button class="category-btn" onclick="showTemplateCategory('promotion')">
+                        <i class="fas fa-tag"></i> Promotion
+                    </button>
+                    <button class="category-btn" onclick="showTemplateCategory=">
+                        <i class="fas fa-calendar"></i> Appointment
+                    </button>
+                    <button class="category-btn" onclick="showTemplateCategory('support')">
+                        <i class="fas fa-headset"></i> Support
+                    </button>
+                    <button class="category-btn" onclick="showTemplateCategory('custom')">
+                        <i class="fas fa-plus"></i> Custom
+                    </button>
+                </div>
+
+                <div class="template-editor">
+                    <div class="template-preview">
+                        <h3>Template Preview</h3>
+                        <div class="phone-preview">
+                            <div class="phone-header">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>WhatsApp</span>
+                            </div>
+                            <div class="message-bubble" id="templatePreview">
+                                Select a template to preview
+                            </div>
+                            <div class="quick-replies" id="quickRepliesPreview"></div>
+                        </div>
+                    </div>
+
+                    <div class="template-form">
+                        <h3>Template Editor</h3>
+                        <div class="form-group">
+                            <label for="templateName">Template Name</label>
+                            <input type="text" id="templateName" placeholder="welcome_message">
+                        </div>
+                        <div class="form-group">
+                            <label for="templateCategory">Category</label>
+                            <select id="templateCategory">
+                                <option value="marketing">Marketing</option>
+                                <option value="utility">Utility</option>
+                                <option value="authentication">Authentication</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="templateContent">Message Content</label>
+                            <textarea id="templateContent" rows="6" placeholder="Hello {{1}}, welcome to our service!"></textarea>
+                            <div class="variable-help">
+                                <small>Variables: {{1}}, {{2}}, {{3}} etc.</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quickReplies">Quick Replies (one per line)</label>
+                            <textarea id="quickReplies" rows="3" placeholder="Yes, I'm interested&#10;Tell me more&#10;Not now"></textarea>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-secondary" onclick="clearTemplate()">Clear</button>
+                            <button class="btn btn-primary" onclick="saveTemplate()">Save Template</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bot Testing Section -->
+            <section class="testing-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-flask"></i> Bot Testing</h2>
+                    <p>Test your bot responses before deployment</p>
+                </div>
+
+                <div class="chat-simulator">
+                    <div class="chat-header">
+                        <div class="bot-info">
+                            <div class="bot-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bot-details">
+                                <h4 id="testBotName">Your Bot</h4>
+                                <span class="bot-status online">Online</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! 👋 I'm your FAQ bot. How can I help you today?</p>
+                                <span class="message-time">10:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input">
+                        <div class="input-container">
+                            <input type="text" id="testInput" placeholder="Type a message to test the bot...">
+                            <button class="send-btn" onclick="sendTestMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="test-controls">
+                            <button class="test-btn" onclick="testCommonQuestions()">
+                                <i class="fas fa-question"></i> Test Common Questions
+                            </button>
+                            <button class="test-btn" onclick="testEdgeCases()">
+                                <i class="fas fa-exclamation-triangle"></i> Test Edge Cases
+                            </button>
+                            <button class="test-btn" onclick="clearChat()">
+                                <i class="fas fa-trash"></i> Clear Chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-results">
+                    <h3>Test Results</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value" id="accuracyScore">0%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="responseTime">0s</div>
+                            <div class="metric-label">Avg Response Time</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="handoffRate">0%</div>
+                            <div class="metric-label">Human Handoff Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="satisfactionScore">0%</div>
+                            <div class="metric-label">Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deployment Section -->
+            <section class="deployment-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-rocket"></i> Deployment</h2>
+                    <p>Deploy your WhatsApp FAQ bot to production</p>
+                </div>
+
+                <div class="deployment-steps">
+                    <div class="step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Configure Bot Settings</h4>
+                            <p>Basic settings and behavior configured</p>
+                        </div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Create FAQs</h4>
+                            <p>Add frequently asked questions and answers</p>
+                        </div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Test Bot</h4>
+                            <p>Test responses and user experience</p>
+                        </div>
+                    </div>
+                    <div class="step current">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Deploy to Production</h4>
+                            <p>Ready to deploy your bot</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deployment-actions">
+                    <div class="deployment-preview">
+                        <h3>Deployment Summary</h3>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span class="label">Bot Name:</span>
+                                <span class="value" id="summaryBotName">Not configured</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">FAQs:</span>
+                                <span class="value" id="summaryFAQs">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Templates:</span>
+                                <span class="value" id="summaryTemplates">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Language:</span>
+                                <span class="value" id="summaryLanguage">English</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">API Status:</span>
+                                <span class="value" id="summaryAPI">Not Connected</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Test Score:</span>
+                                <span class="value" id="summaryScore">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="deployment-controls">
+                        <button class="btn btn-secondary" onclick="exportBotConfig()">
+                            <i class="fas fa-download"></i> Export Config
+                        </button>
+                        <button class="btn btn-secondary" onclick="previewDeployment()">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button class="btn btn-success" onclick="deployBot()">
+                            <i class="fas fa-rocket"></i> Deploy Bot
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FAQ Modal -->
+        <div class="modal" id="faqModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-question-circle"></i> Add/Edit FAQ</h3>
+                    <button class="close-btn" onclick="closeModal('faqModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="faqQuestion">Question *</label>
+                        <input type="text" id="faqQuestion" placeholder="What are your working hours?">
+                        <div class="suggestions">
+                            <small>Suggested questions will appear as you type...</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqAnswer">Answer *</label>
+                        <textarea id="faqAnswer" rows="4" placeholder="Our working hours are Monday to Friday, 9 AM to 6 PM."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqCategory">Category</label>
+                        <select id="faqCategory">
+                            <option value="general">General</option>
+                            <option value="products">Products</option>
+                            <option value="services">Services</option>
+                            <option value="pricing">Pricing</option>
+                            <option value="support">Support</option>
+                            <option value="shipping">Shipping</option>
+                            <option value="returns">Returns</option>
+                            <option value="technical">Technical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqKeywords">Keywords</label>
+                        <input type="text" id="faqKeywords" placeholder="hours, timing, schedule, open">
+                        <small>Separate keywords with commas</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqStatus">Status</label>
+                        <select id="faqStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enableQuickReplies">
+                            Add Quick Reply Options
+                        </label>
+                    </div>
+                    <div class="form-group" id="quickRepliesGroup" style="display: none;">
+                        <label for="faqQuickReplies">Quick Replies (one per line)</label>
+                        <textarea id="faqQuickReplies" rows="3" placeholder="Thank you&#10;More questions&#10;Contact support"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeModal('faqModal')">Cancel</button>
+                    <button class="btn btn-primary" onclick="saveFAQ()">Save FAQ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h3 id="loadingTitle">Processing...</h3>
+                <p id="loadingDescription">Please wait while we configure your bot</p>
+                <div class="loading-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
